@@ -1,0 +1,120 @@
+public class CircularLinkedList {
+
+	static Node head;
+	static class Node{
+		int data;
+		Node next;
+		Node(int d){
+			data=d;
+			
+		}
+	};
+
+	static Node addBegining(Node head, int data){
+	
+		Node node=new Node(data);
+		Node temp=head;
+		node.next=head;
+		
+		if(head!=null){
+			while(temp.next!=head)
+				temp=temp.next;
+			temp.next=node; 
+		}
+		else{
+		node.next=node;
+		}
+		head=node;
+		return head;
+	}
+	
+	static void printList(Node head) 
+    { 
+		if(head==null){
+			System.out.println("list is empty:");
+		}
+        Node temp = head; 
+        
+        if (head != null) { 
+            do { 
+                System.out.print(temp.data+"->"); 
+                temp = temp.next; 
+            } while (temp != head); 
+        } 
+  
+        System.out.printf("\n"); 
+    }
+	
+	static Node deleteNode(Node head, int key) 
+    { 
+        if (head == null) 
+            return null; 
+  
+  
+        Node curr = head, prev=null ; 
+        while (curr.data != key) { 
+            if (curr.next == head) { 
+                System.out.printf("\nGiven node is not found in the list!!!"); 
+                break; 
+            } 
+            prev = curr; 
+            curr = curr.next; 
+        } 
+        
+        if (curr == head && curr.next!=head) { 
+            prev = head; 
+            while (prev.next != head){
+                prev = prev.next; 
+            }
+            head = curr.next; 
+            prev.next = head; 
+        } 
+        
+        else if(curr==head){
+        	head=null;
+        	return head;
+        }
+        else if (curr.next == head) { 
+            prev.next = head; 
+        } 
+        else { 
+            prev.next = curr.next; 
+        } 
+        return head; 
+    } 
+	static Node addAfter(Node head,int data,int key){
+		if(head==null){
+			return addBegining(head, data);
+		}
+		Node curr=head;
+		while(curr.data!=key){
+			if(curr.next==head){
+				System.out.println(" Element not found");
+				return head;
+			}
+			curr=curr.next;
+		}
+		Node node=new Node(data);
+		node.next=curr.next;
+		curr.next=node;
+		return head;
+	}
+	
+	public static void main(String[] args) {
+
+	head=null;
+
+	head=addBegining(head, 10);
+	head=addBegining(head, 05);
+	head=addBegining(head, 1);
+	printList(head);
+	head=addAfter(head, 6, 7);
+	printList(head);
+	head=deleteNode(head, 1);
+	printList(head);
+	head=deleteNode(head, 5);
+	printList(head);
+	head=deleteNode(head, 10);
+	printList(head);
+}
+}
