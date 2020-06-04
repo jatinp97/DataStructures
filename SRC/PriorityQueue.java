@@ -1,4 +1,7 @@
+
 public class PriorityQ {
+
+	
 	static class Node{
 		Node next;
 		 int data, priority;
@@ -8,7 +11,6 @@ public class PriorityQ {
 		}
 	};
 	static Node head;
-	
 	
 	static Node addToEmpty(Node head,int data,int priority){
 		if(head==null){
@@ -23,32 +25,42 @@ public class PriorityQ {
 		if(head==null){
 			return addToEmpty(head, data, priority);
 		}
+		
+		Node node=new Node(data, priority);
 		Node temp=head;
-		Node node=new Node(data,priority);
-		if(temp.priority > priority){
-			node.next=temp;
-			
+		
+		if(head.priority < priority){
+			node.next=head;
 			head=node;
-			return head;
 		}
 		else{
-			while(temp.next!=null && temp.next.priority<priority){
+			while(temp.next!=null && temp.next.priority>priority){
 				temp=temp.next;
 			}
-			node.next=temp.next;
-			temp.next=node;
+		
+		node.next=temp.next;
+		temp.next=node;
 		}
 		return head;
+		
 	}
-	static Node pop(Node head){
-		if(head==null){
-			throw new IllegalStateException("Empty");
-		}
-		Node temp=head;
-		temp=temp.next;
-		head=temp;
-		return head;
+	
+	static int peek(Node head)  
+	{  
+	    return head.data;  
+	}  
+	
+	static Node pop(Node head)  
+	{  
+	    
+	    (head)  = (head).next;  
+	    return head; 
 	}
+	static int isEmpty(Node head)  
+	{  
+	    return ((head) == null)?1:0;  
+	}
+	
 	static void printQ(Node head){
 		if(head==null){
 			System.out.println("Empty");
@@ -60,15 +72,8 @@ public class PriorityQ {
 		}
 		System.out.println(" ");
 	}
-	static void peek(Node head){
-		if(head==null){
-			throw new IllegalStateException("Empty");
-		}
-		System.out.println("Peek is :"+ head.data);
-		head=head.next;
-	}
 	public static void main(String[] args) {
-		head=null;
+		
 		head = push(head, 55, 5);
 		//head = addToEmpty(head, 55, 5);
 		printQ(head);
